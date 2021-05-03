@@ -1,0 +1,74 @@
+{
+  "policy": {
+    "name": "resource-info",
+    "resource": "ec2",
+    "actions": [
+      {
+        "type": "webhook",
+        "url": "https://hooks.slack.com/services/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",
+        "body": "resource.{\n  \"text\": \"test\"\n}\n"
+      }
+    ]
+  },
+  "version": "0.9.11",
+  "execution": {
+    "id": "df420c0b-30b0-4bf9-891a-fcd0ad3525c2",
+    "start": 1619777119.1062155,
+    "end_time": 1619777119.5364754,
+    "duration": 0.43025994300842285
+  },
+  "config": {
+    "region": "eu-central-1",
+    "regions": [
+      "eu-central-1"
+    ],
+    "cache": "~/.cache/cloud-custodian.cache",
+    "profile": null,
+    "account_id": "869853354200",
+    "assume_role": null,
+    "external_id": null,
+    "log_group": null,
+    "tracer": null,
+    "metrics_enabled": null,
+    "metrics": null,
+    "output_dir": "output/",
+    "cache_period": 15,
+    "dryrun": false,
+    "authorization_file": null,
+    "subparser": "run",
+    "config": null,
+    "configs": [
+      "policies/policy.yml"
+    ],
+    "policy_filters": [],
+    "resource_types": [],
+    "verbose": null,
+    "quiet": null,
+    "debug": false,
+    "skip_validation": false,
+    "command": "c7n.commands.run",
+    "vars": null
+  },
+  "sys-stats": {},
+  "api-stats": {},
+  "metrics": [
+    {
+      "MetricName": "ResourceCount",
+      "Timestamp": "2021-04-30T12:05:19.114272",
+      "Value": 2,
+      "Unit": "Count"
+    },
+    {
+      "MetricName": "ResourceTime",
+      "Timestamp": "2021-04-30T12:05:19.114280",
+      "Value": 0.00017952919006347656,
+      "Unit": "Seconds"
+    },
+    {
+      "MetricName": "ActionTime",
+      "Timestamp": "2021-04-30T12:05:19.536459",
+      "Value": 0.4216043949127197,
+      "Unit": "Seconds"
+    }
+  ]
+}

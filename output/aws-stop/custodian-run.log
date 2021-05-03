@@ -1,0 +1,6 @@
+2021-05-03 11:25:55,241 - custodian.policy - INFO - policy:aws-stop resource:aws.ec2 region:eu-central-1 count:1 time:0.33
+2021-05-03 11:27:53,047 - custodian.policy - INFO - policy:aws-stop resource:aws.ec2 region:eu-central-1 count:1 time:0.00
+2021-05-03 11:27:53,673 - custodian.policy - INFO - policy:aws-stop action:stop resources:1 execution_time:0.62
+2021-05-03 11:40:21,401 - custodian.policy - INFO - policy:aws-stop resource:aws.ec2 region:eu-central-1 count:1 time:0.00
+2021-05-03 11:40:21,402 - custodian.actions - WARNING - start implicitly filtered 0 of 1 resources key:State.Name on stopped
+2021-05-03 11:40:21,402 - custodian.policy - INFO - policy:aws-stop action:start resources:1 execution_time:0.00

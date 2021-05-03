@@ -1,0 +1,101 @@
+{
+  "policy": {
+    "name": "s3-cross-account",
+    "description": "Checks S3 for buckets with cross-account access and\nremoves the cross-account access.\n",
+    "resource": "s3",
+    "filters": [
+      {
+        "type": "cross-account"
+      }
+    ],
+    "actions": [
+      {
+        "type": "remove-statements",
+        "statement_ids": "matched"
+      }
+    ]
+  },
+  "version": "0.9.11",
+  "execution": {
+    "id": "8c4cf4f3-ec44-4d9c-8462-9320795bf42f",
+    "start": 1620035642.547303,
+    "end_time": 1620035642.556357,
+    "duration": 0.009053945541381836
+  },
+  "config": {
+    "region": "eu-central-1",
+    "regions": [
+      "eu-central-1"
+    ],
+    "cache": "~/.cache/cloud-custodian.cache",
+    "profile": null,
+    "account_id": "869853354200",
+    "assume_role": null,
+    "external_id": null,
+    "log_group": null,
+    "tracer": null,
+    "metrics_enabled": "aws",
+    "metrics": null,
+    "output_dir": "output/",
+    "cache_period": 15,
+    "dryrun": false,
+    "authorization_file": null,
+    "subparser": "run",
+    "config": null,
+    "configs": [
+      "policies/aws.yml"
+    ],
+    "policy_filters": [],
+    "resource_types": [],
+    "verbose": null,
+    "quiet": null,
+    "debug": false,
+    "skip_validation": false,
+    "command": "c7n.commands.run",
+    "vars": null
+  },
+  "sys-stats": {},
+  "api-stats": {},
+  "metrics": [
+    {
+      "MetricName": "ResourceCount",
+      "Timestamp": "2021-05-03T09:54:02.556202",
+      "Value": 0,
+      "Unit": "Count",
+      "Dimensions": [
+        {
+          "Name": "Policy",
+          "Value": "s3-cross-account"
+        },
+        {
+          "Name": "ResType",
+          "Value": "s3"
+        },
+        {
+          "Name": "Scope",
+          "Value": "Policy"
+        }
+      ]
+    },
+    {
+      "MetricName": "ResourceTime",
+      "Timestamp": "2021-05-03T09:54:02.556211",
+      "Value": 0.0001990795135498047,
+      "Unit": "Seconds",
+      "Dimensions": [
+        {
+          "Name": "Policy",
+          "Value": "s3-cross-account"
+        },
+        {
+          "Name": "ResType",
+          "Value": "s3"
+        },
+        {
+          "Name": "Scope",
+          "Value": "Policy"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+2021-05-03 11:48:07,903 - custodian.policy - INFO - policy:tag-compliance resource:aws.ec2 region:eu-central-1 count:0 time:0.00
+2021-05-03 11:48:46,582 - custodian.policy - INFO - policy:tag-compliance resource:aws.ec2 region:eu-central-1 count:0 time:0.00
+2021-05-03 11:52:02,290 - custodian.policy - INFO - policy:tag-compliance resource:aws.ec2 region:eu-central-1 count:0 time:0.00
+2021-05-03 11:54:05,757 - custodian.policy - INFO - policy:tag-compliance resource:aws.ec2 region:eu-central-1 count:0 time:0.00
