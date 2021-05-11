@@ -1,0 +1,12 @@
+policies:
+- name: config-test
+  resource: ec2
+  mode: 
+    type: config-rule
+    role: CloudCustodian-Role
+  filters:
+    - or: #If any of these tags are missing -> select instance
+      - "tag:env": absent    
+      - "tag:owner": absent
+  actions:
+    - stop
