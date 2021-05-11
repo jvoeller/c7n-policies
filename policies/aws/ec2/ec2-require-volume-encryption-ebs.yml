@@ -1,0 +1,42 @@
+policies:
+
+
+### EC2 State based trigger ###
+- name: ec2-require-volume-encryption-ebs
+  resource: aws.ec2
+  description: if ec2 volume not encrypten then terminate instance
+  mode:
+    type: ec2-instance-state
+    role: CloudCustodian-Role
+    events:
+      - pending
+  filters:
+    - type: ebs
+      key: Encrypted
+      value: false
+  actions:
+    - type: tag
+      key: Encryption
+      value: "false"
+    - terminate
+
+### CloudTrail/ Cloudwatch Event based trigger ###
+- name: aws-test
+  resource: ec2
+  description: if ec2 volume not encrypten then terminate instance
+  mode:
+    type: cloudtrail
+    role: CloudCustodian-Role
+    events:
+      - source: ec2.amazonaws.com
+        event: RunInstances
+        ids: responseElements.instancesSet.items[].instanceId
+  filters:
+    - type: ebs
+      key: Encrypted
+      value: false
+  actions:
+    - type: tag
+      key: Encryption
+      value: "false"
+    - terminate
