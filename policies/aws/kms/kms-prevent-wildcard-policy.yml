@@ -1,0 +1,17 @@
+policies:
+  - name: kms-prevent-wildcard-policy
+    description: "Check if the key has a wildcard policy and prevent it"
+    resource: aws.kms-key
+    mode:
+      type: cloudtrail
+      role: CloudCustodian-Role
+      events:
+        - source: kms.amazonaws.com
+          event: CreateKey
+          ids: "responseElements.keyMetadata.keyId"
+    filters:
+      - type: event
+        key: "detail.requestParameters.policy"
+        op: contains
+        value: "kms:*"
+

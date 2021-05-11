@@ -1,0 +1,11 @@
+policies:
+  - name: kms-remove-non-cmk-keys
+    description: "Check if the key is managed by the customer, if not remove it"
+    resource: aws.kms
+    mode:
+      type: config-rule
+      role: CloudCustodian-Role              
+    filters:
+    - type: event
+      key: responseElements.keyMetadata.keyManager
+      value: AWS
