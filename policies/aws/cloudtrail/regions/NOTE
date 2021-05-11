@@ -1,0 +1,4 @@
+These Lambdas have to be deployed in every region for this to work because cloudtrail is a location based service.
+This means events in us-west-1 don't show up in the eu-west-1 event history.
+
+CLI --region all to deploy in every region at once
