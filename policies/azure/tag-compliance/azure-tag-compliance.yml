@@ -1,0 +1,32 @@
+policies:
+  - name: azure-tag-compliance
+    mode:
+      type: azure-event-grid
+      provision-options:
+        identity:
+          type: UserAssigned
+          id: cloud-custodian-id
+        servicePlan:
+          name: functionshost
+          location: Germany West Central
+          skuTier: Standard
+          skuName: S1
+        appInsights:
+          location: Germany West Central
+        storageAccount:
+          name: c7nstorageaccount
+          location: Germany West Central
+      events: ['VmWrite']
+    resource: azure.armresource
+    filters:
+      - tag:env: absent
+      - type: value
+        key: tags.env
+        op: ni
+        value: ["stage", "prod", "dev"]
+    actions:
+      - delete
+
+
+
+      
