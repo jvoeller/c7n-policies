@@ -1,0 +1,14 @@
+policies:
+  - name: azure-network-open-ports
+    description: |
+      Check for open ports to the internet and close them.   
+    resource: azure.networksecuritygroup
+    filters:
+      - type: ingress
+        match: 'any'
+        access: 'Allow'
+        source: '*'
+    actions:
+      - type: close
+        direction: "Inbound"
+

@@ -1,0 +1,19 @@
+policies:
+  - name: azure-cryptography-hsm
+    description:
+      List all non-HSM keys and notify someone.
+    resource: azure.keyvault-key
+    filters:
+      - type: key-type
+        key-types:
+          - EC
+          - RSA
+    actions:
+      - type: notify
+        template: default
+        subject: Key Rotation
+        to: 
+          - responsible@bank.com
+        transport:
+          type: asq
+          queue: https://storagename.queue.core.windows.net/queuename          

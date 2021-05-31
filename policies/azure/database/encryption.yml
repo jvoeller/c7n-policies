@@ -1,0 +1,10 @@
+policies:
+  - name: db-encryption
+    description: |
+      Detect if your SQL instance uses encryption, delete it if it doesn't.  
+    resource: azure.sql-database
+    filters:
+      - type: transparent-data-encryption
+        enabled: false
+    actions:
+      - delete

@@ -1,0 +1,41 @@
+policies:
+  - name: azure-vm-secure-images
+    description: |
+      Detect and delete VM instances that are using unapproved AMIs.   
+    mode:
+      type: azure-event-grid
+      provision-options:
+        identity:
+          type: UserAssigned
+          id: cloud-custodian-id
+        servicePlan:
+          name: functionshost
+          location: Germany West Central
+          skuTier: Standard
+          skuName: S1
+        appInsights:
+          location: Germany West Central
+        storageAccount:
+          name: c7nstorageaccount
+          location: Germany West Central
+      events: ['VmWrite']
+    resource: azure.armresource
+    filters:
+      - not: 
+        - or: 
+          - and:
+            - type: value
+              key: properties.storageProfile.imageReference.sku
+              value: 18.04-LTS
+            - type: value
+              key: properties.storageProfile.imageReference.version
+              value: latest   
+          - and:
+            - type: value
+              key: properties.storageProfile.imageReference.sku
+              value: cis-debian9-l1
+            - type: value
+              key: properties.storageProfile.imageReference.version
+              value: "1.0.18"
+    actions:
+      - delete

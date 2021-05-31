@@ -1,0 +1,25 @@
+policies:
+  - name: azure-vm-region
+    description: |
+      Detect and delete VM instances that are launched outside of specified regions.  
+    resource: azure.vm
+    filters:
+      - type: value
+        key: location
+        op: not-in
+        value:
+          - northeurope  
+          - uksouth     
+          - westeurope     
+          - francecentral     
+          - germanywestcentral   
+          - norwayeast    
+          - switzerlandnorth
+          - europe
+          - francesouth
+          - germanynorth
+          - norwaywest
+          - switzerlandwest
+          - ukwest
+    actions:
+      - delete

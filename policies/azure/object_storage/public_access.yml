@@ -1,0 +1,31 @@
+policies:
+  - name: azure-object-storage-public-access
+    description: |
+      Check if an Blob storage is publicly accessable. Revoke public access if it is.  
+    resource: azure.storage-container
+    mode:
+      type: azure-event-grid
+      provision-options:
+        identity:
+          type: UserAssigned
+          id: cloud-custodian-id
+        servicePlan:
+          name: functionshost
+          location: Germany West Central
+          skuTier: Standard
+          skuName: S1
+        appInsights:
+          location: Germany West Central
+        storageAccount:
+          name: c7nstorageaccount
+          location: Germany West Central
+      events:
+          - StorageContainerWrite
+    filters:      
+      - type: value
+        key: properties.publicAccess
+        value: ['Blob', 'Container']
+        op: in
+    actions:
+      - type: set-public-access
+        value: None

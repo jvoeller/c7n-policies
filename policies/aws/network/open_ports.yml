@@ -1,0 +1,16 @@
+policies:
+  - name: aws-network-open-ports
+    description: |
+      Check for open ports to the internet and close them. 
+    resource: security-group
+    filters:
+    - or:
+      - type: ingress
+        Cidr:
+          value: "0.0.0/0"
+      - type: ingress
+        CidrV6:
+          value: "::/0"
+    actions:
+      - type: remove-permissions
+        ingress: matched

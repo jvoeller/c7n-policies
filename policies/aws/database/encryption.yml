@@ -1,0 +1,19 @@
+policies:
+  - name: aws-database-encryption
+    description: |
+      Detect if your RDS instance uses encryption, delete it if it doesn't.
+    resource: rds
+    mode:
+      type: cloudtrail
+      role: CloudCustodian-Role
+      events:
+        - source: rds.amazonaws.com
+          ids: requestParameters.dBInstanceIdentifier
+          event: CreateDBInstance
+    filters:
+      - type: value 
+        key: StorageEncrypted
+        value: false
+    actions:
+      - type: delete
+        skip-snapshot: false

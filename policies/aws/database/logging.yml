@@ -1,0 +1,21 @@
+policies:
+  - name: aws-database-logging
+    description: |
+      Detect and if necessary enable logging for your RDS instance. 
+    resource: rds
+    filters:
+      - type: value
+        key: EnabledCloudwatchLogsExports
+        value: null
+    actions:
+      - type: modify-db
+        update:
+          - property: 'CloudwatchLogsExportConfiguration'
+            value: {
+                    'EnableLogTypes': [
+                        "error",
+                        "general"
+                    ]
+                  }
+            immediate: true            
+

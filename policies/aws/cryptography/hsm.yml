@@ -1,0 +1,7 @@
+policies:
+  - name: aws-cryptography-hsm
+    description: |
+      List all non-HSM keys and notify someone.
+    resource: kms-key
+    
+    

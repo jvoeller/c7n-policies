@@ -1,0 +1,60 @@
+##REMEDY: remove-statements to make keys useless
+policies:
+  - name: aws-cryptography-cmk-rds
+    description: |
+      Alert AWS Security Hub if a database is using a managed key.
+    resource: aws.rds
+    filters:
+      - type: kms-alias
+        key: AliasName
+        value: ^(alias/aws/)
+        op: regex
+    actions:
+      - type: post-finding
+        types:
+          - "Software and Configuration Checks/Industry and Regulatory Standards/CMK"
+        description: "Keys should be managed by the customer."
+        severity_normalized: 6
+        recommendation: "Use a customer managed key."
+        confidence: 100
+        compliance_status: FAILED
+
+
+  - name: aws-cryptography-cmk-ebs
+    description: |
+      Alert AWS Security Hub if an EBS volume is using a managed key.
+    resource: aws.ebs
+    filters:
+      - type: kms-alias
+        key: AliasName
+        value: ^(alias/aws/)
+        op: regex
+    actions:
+      - type: post-finding
+        types:
+          - "Software and Configuration Checks/Industry and Regulatory Standards/CMK"
+        description: "Keys should be managed by the customer."
+        severity_normalized: 6
+        recommendation: "Use a customer managed key."
+        confidence: 100
+        compliance_status: FAILED
+
+  - name: aws-cryptography-cmk-s3
+    resource: s3
+    filters:
+      - type: bucket-encryption
+        state: true
+        crypto: aws:kms
+      - type: value
+        key: "\"c7n:bucket-encryption\".ServerSideEncryptionConfiguration.Rules[0].ApplyServerSideEncryptionByDefault.KMSMasterKeyID"
+        op: regex
+        value: ^(.*:alias\/aws\/.*)$
+    actions:
+      - type: post-finding
+        types:
+          - "Software and Configuration Checks/Industry and Regulatory Standards/BaFin"
+        description: "Keys should be managed by the customer."
+        severity_normalized: 6
+        recommendation: "Use a customer managed key."
+        confidence: 100
+        compliance_status: FAILED        

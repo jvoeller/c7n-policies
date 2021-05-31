@@ -1,0 +1,13 @@
+policies:
+  - name: azure-network-security-group
+    description: |
+      Check if there is a security group attached to your virtual network.
+    resource: azure.vnet
+    filters:
+        - type: value
+          key: properties.subnets[*].properties.networkSecurityGroup
+          value: present
+          
+
+    
+    

@@ -1,0 +1,19 @@
+policies:
+  - name: azure-block-storage-tag-compliance
+    description: |
+      Detect, tag and delete Disk volumes that are missing a required tag.   
+    resource: azure.disk
+    filters:
+      - or:
+        - "tag:env": absent
+        - "tag:project": absent
+        - "tag:owner": absent
+    actions:
+      - type: tag
+        tag: "missing-tags"
+        value: "true"
+      - type: mark-for-op
+        op: delete
+        days: 4
+
+      

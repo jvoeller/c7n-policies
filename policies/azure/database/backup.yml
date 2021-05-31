@@ -1,0 +1,12 @@
+policies:
+  - name: azure-database-backup
+    description: |
+      Detect and if necessary enable automatic backups for your SQL instance.
+    resource: azure.sql-database
+    filters:
+      - type: short-term-backup-retention-policy
+        op: lt
+        retention-period-days: 14
+    actions:
+      - type: update-short-term-backup-retention-policy
+        retention-period-days: 7        

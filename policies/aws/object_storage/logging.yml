@@ -1,0 +1,11 @@
+policies:
+  - name: aws-object-storage-logging
+    description: |
+      Check if S3 bucket has logging disabled and if necessary enable it.
+    resource: s3
+    filters:
+      - type: bucket-logging
+        op: disabled
+    actions:
+    - type: toggle-logging
+      target_bucket: c7n-config

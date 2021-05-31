@@ -1,0 +1,37 @@
+policies:
+  - name: aws-block-storage-garbage-collection
+    description: |
+      Detect and tag for deletion all EBS volumes that are not attached to any instance.  
+    resource: aws.ebs
+    filters:
+      - type: value
+        key: "Attachments[0].Device"
+        value: null
+      - "tag:maid_status": absent
+      - "tag:unattached-storage": absent
+    actions:
+      - type: mark-for-op
+        op: delete
+    
+  - name: aws-block-storage-unmark
+    description: |
+      Untag volumes that are attached to an instance again.
+    resource: aws.ebs
+    filters:
+      - type: value
+        key: "Attachments[0].Device"
+        value: not-null
+      - "tag:maid_status": not-null
+    actions:
+      - unmark
+
+  - name: aws-block-storage-delete-marked
+    description: |
+      Delete tagged instances.
+    resource: aws.ebs
+    filters:
+      - type: marked-for-op
+        op: delete
+    actions:
+        - delete
+      

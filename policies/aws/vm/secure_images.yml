@@ -1,0 +1,19 @@
+policies:
+  - name: aws-vm-secure-images
+    description: |
+      Detect and stop EC2 instances that are using unapproved AMIs. 
+    resource: aws.ec2
+    filters:
+      - and:
+        - type: value
+          key: State.Name
+          value: running
+        - type: value
+          key: ImageId
+          op: not-in
+          value:
+            - ami-043097594a7df80ec #Amazon Linux 2 AMI x86
+            - ami-009b16df9fcaac611 #Red Hat Enterprise Linux x86
+            - ami-05f7491af5eef733a #Ubuntu Server 20.04 LTS x86
+    actions:
+      - stop

@@ -1,0 +1,9 @@
+policies:
+  - name: aws-iam-log-sign-ins
+    description: |
+      If neccessesary create trail for data events (including sign-ins)
+    resource: account
+    actions:
+     - type: enable-data-events
+       data-trail:
+         name: s3-events

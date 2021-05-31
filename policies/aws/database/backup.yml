@@ -1,0 +1,14 @@
+policies:
+  - name: aws-database-backup
+    description: |
+      Detect and if necessary enable automatic backups for your RDS instance.
+    resource: rds
+    filters:
+      - type: value
+        key: BackupRetentionPeriod
+        value: 0
+    actions:
+      - type: retention
+        days: 1
+        copy-tags: true
+        enforce: exact

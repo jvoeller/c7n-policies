@@ -1,0 +1,22 @@
+policies:
+  - name: aws-cryptography-key-rotation
+    description: 
+      Notify the AWS Security Hub if your key hasn't been changed in over 90 days.
+    resource: aws.kms-key
+    filters:
+      - type: value
+        key: CreationDate
+        value_type: age
+        value: 90
+        op: greater-than
+    actions:
+      - type: post-finding
+        types:
+          - "Software and Configuration Checks/Industry and Regulatory Standards/KeyRotation"
+        description: "Keys should be rotated after 90 days."
+        severity_normalized: 6
+        recommendation: "Rotate your key."
+        confidence: 100
+        compliance_status: FAILED
+
+    

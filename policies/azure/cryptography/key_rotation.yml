@@ -1,0 +1,20 @@
+policies:
+  - name: azure-cryptography-key-rotation
+    description: 
+      Notify someone if your key hasn't been changed in over 90 days.  
+    resource: azure.keyvault-key
+    filters:
+      - type: value
+        key: attibutes.created
+        value_type: age
+        value: 90
+        op: greater-than
+    actions:
+      - type: notify
+        template: default
+        subject: Key Rotation
+        to: 
+          - responsible@bank.com
+        transport:
+          type: asq
+          queue: https://storagename.queue.core.windows.net/queuename

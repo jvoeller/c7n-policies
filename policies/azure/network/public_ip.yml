@@ -1,0 +1,8 @@
+policies:
+  - name: azure-network-public-ip
+    description: |
+      Check for public IP ressources and notify someone.  
+    resource: azure.publicip
+    actions:
+      - notify
+      

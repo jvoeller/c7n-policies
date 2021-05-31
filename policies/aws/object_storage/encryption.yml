@@ -1,0 +1,35 @@
+policies:
+- name: aws-object-storage-encryption
+  description: |
+    Check if S3 bucket is encrypted and if necessary encrypt it. 
+  resource: s3
+  mode:
+    type: cloudtrail
+    role: CloudCustodian-Role
+    events:
+      - source: s3.amazonaws.com
+        event: CreateBucket
+        ids: requestParameters.bucketName
+  filters:
+    - type: bucket-encryption
+      state: false
+  actions:
+    - type: set-bucket-encryption
+      enabled: true
+      crypto: aws:kms
+      key: alias/aws/s3
+
+
+
+- name: aws-object-storage-encryption
+  description: |
+    Check if S3 bucket is encrypted and if necessary encrypt it.
+  resource: s3
+  filters:
+    - type: bucket-encryption
+      state: false
+  actions:
+    - type: set-bucket-encryption
+      enabled: true
+      crypto: aws:kms
+      key: alias/aws/s3  

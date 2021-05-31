@@ -1,0 +1,28 @@
+policies:
+  - name: azure-block-storage-garbage-collection
+    description: |
+      Detect and delete all Disk volumes that are not attached to any instance.    
+    resource: azure.disk
+    mode:
+      type: azure-periodic
+      schedule: "0 0 0 * * *"
+      provision-options:
+        identity:
+          type: UserAssigned
+          id: cloud-custodian-id
+        servicePlan:
+          name: functionshost
+          location: Germany West Central
+          skuTier: Standard
+          skuName: S1
+        appInsights:
+          location: Germany West Central
+        storageAccount:
+          name: c7nstorageaccount
+          location: Germany West Central          
+    filters:
+      - type: value
+        key: managedBy
+        value: null
+    actions:
+      - type: delete

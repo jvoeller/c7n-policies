@@ -1,0 +1,42 @@
+policies:
+  - name: aws-block-storage-tag-compliance
+    description: |
+      Detect and delete EBS volumes that are missing a required tag. 
+    resource: aws.ebs
+    filters:
+      - or:
+        - "tag:env": absent
+        - "tag:project": absent
+        - "tag:owner": absent
+    actions:
+      - type: tag
+        key: "missing-tags"
+        value: "true"
+      - type: mark-for-op
+        op: delete
+        days: 4
+
+
+  - name: aws-block-storage-unmark
+    description: |
+      Untag volumes that have required tags.
+    resource: aws.ebs
+    filters:
+      - or:
+        - "tag:env": present
+        - "tag:project": present
+        - "tag:owner": present
+      - "tag:maid_status": not-null
+    actions:
+      - unmark
+
+  - name: aws-block-storage-delete-marked
+    description: |
+      Delete tagged instances.
+    resource: aws.ebs
+    filters:
+      - type: marked-for-op
+        op: delete
+    actions:
+        - delete
+      

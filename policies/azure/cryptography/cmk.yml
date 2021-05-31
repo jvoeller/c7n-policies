@@ -1,0 +1,28 @@
+policies:
+  - name: azure-cryptography-cmk-disk
+    description: |
+      Delete disk if it is using a managed key.  
+    mode:
+      type: azure-event-grid
+      provision-options:
+        identity:
+          type: UserAssigned
+          id: cloud-custodian-id
+        servicePlan:
+          name: functionshost
+          location: Germany West Central
+          skuTier: Standard
+          skuName: S1
+        appInsights:
+          location: Germany West Central
+        storageAccount:
+          name: c7nstorageaccount
+          location: Germany West Central
+      events: ['VmWrite']
+    resource: azure.armresource
+    filters:
+      - type: value
+        key: properties.storageProfile.datadisk[].managedDisk.diskEncryptionSet
+        value: null
+    actions:
+      - delete

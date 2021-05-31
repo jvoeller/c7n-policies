@@ -1,0 +1,45 @@
+policies:
+### EC2 State based trigger ###
+- name: aws-block-storage-encryption
+  description: |
+    Detect and terminate instances without EBS encryption on launch via EC2 Instance State.
+  resource: aws.ec2
+  mode:
+    type: ec2-instance-state
+    role: CloudCustodian-Role
+    events:
+      - pending
+  filters:
+    - type: ebs
+      key: Encrypted
+      value: false
+  actions:
+    - type: tag
+      key: Encryption
+      value: "false"
+    - terminate
+
+
+
+### CloudTrail/ Cloudwatch Event based trigger ###
+- name: aws-block-storage-encryption
+  resource: ec2
+  description: |
+    Detect and terminate instances without EBS encryption on launch via CloudTrial.
+  mode:
+    type: cloudtrail
+    role: CloudCustodian-Role
+    events:
+      - source: ec2.amazonaws.com
+        event: RunInstances
+        ids: responseElements.instancesSet.items[].instanceId
+  filters:
+    - type: ebs
+      key: Encrypted
+      value: false
+  actions:
+    - type: tag
+      key: Encryption
+      value: "false"
+    - terminate
+    

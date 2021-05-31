@@ -1,0 +1,11 @@
+policies:
+  - name: azure-database-logging
+    description: |
+      Detect if logging is enabled for your SQL instance.   
+    resource: azure.sql-database
+    filters:
+      - type: diagnostic-settings
+        key: logs[?category == 'SQLInsights'][].enabled
+        value: true
+        op: in
+        value_type: swap

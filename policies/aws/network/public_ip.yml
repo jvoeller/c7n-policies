@@ -1,0 +1,30 @@
+policies:
+  - name: aws-network-public-ip
+    description: |
+      Check for EC2 instances with public IPs and terminate them.
+    resource: ec2
+    mode: 
+      type: cloudtrail
+      events:
+        - source: ec2.amazonaws.com
+          event: RunInstances
+          ids: responseElements.instancesSet.items[].instanceId
+    filters:
+      - type: event
+        key: "detail.requestParameters.networkInterfaceSet.items[0].associatePublicIpAddress"
+        value: true
+    actions:
+      - type: terminate
+        force: true
+
+  - name: aws-network-public-ip
+    description: |
+      Check for EC2 instances with public IPs and terminate them.  
+    resource: ec2
+    filters:
+      - type: value
+        key: "PublicIpAddress"
+        value: not-null
+    actions:
+      - type: terminate
+        force: true

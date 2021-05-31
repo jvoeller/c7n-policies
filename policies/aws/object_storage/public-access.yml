@@ -1,0 +1,10 @@
+policies:
+  - name: aws-object-storage-public-accecss
+    description: |
+      Check if an S3 container is publicly accessable. Revoke public access if it is.
+    resource: s3
+    filters:
+      - type: check-public-block
+        BlockPublicPolicy: false
+    actions:
+      - type: set-public-block

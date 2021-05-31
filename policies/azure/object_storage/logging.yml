@@ -1,0 +1,27 @@
+policies:
+  - name: azure-object-storage-logging
+    description: |
+      Check if Blob storage has logging disabled and if necessary enable it.
+    resource: azure.storage
+    filters:
+      - or: 
+          - type: storage-diagnostic-settings
+            storage-type: blob
+            key: logging.delete
+            op: eq
+            value: False      
+          - type: storage-diagnostic-settings
+            storage-type: blob
+            key: logging.write
+            op: eq
+            value: False      
+          - type: storage-diagnostic-settings
+            storage-type: blob
+            key: logging.read
+            op: eq
+            value: False                  
+    actions:
+      - type: set-log-settings
+        storage-types: [blob]
+        retention: 1
+        log: [read, write, delete]

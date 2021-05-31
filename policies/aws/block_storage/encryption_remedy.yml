@@ -1,0 +1,23 @@
+policies:
+  - name: ebs-encrypt-volumes
+    description: |
+      Encrypt all unencrypted EBS volumes
+    resource: ebs
+    filters:
+      - Encrypted: false
+    actions:
+      - type: encrypt-instance-volumes
+        key: alias/encrypt-volume
+
+
+  - name: set-default-ebs-encryption
+    description: |
+      Encrypt all unencrypted EBS volumes
+    resource: aws.account
+    filters:
+    - type: default-ebs-encryption
+      state: false
+    actions:
+    - type: set-ebs-encryption
+      state: true
+      key: alias/aws/ebs         

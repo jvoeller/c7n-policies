@@ -1,0 +1,22 @@
+policies:
+  - name: azure-vm-old-instances
+    description: |
+      Detect and stops VM instances that are older than 90 days.  
+    resource: azure.vm
+    filters:
+      - type: value
+        key: tags.CreationDate
+        value_type: age
+        op: gt
+        value: 90
+    actions:
+      - stop
+
+
+
+
+#Requires action auto-tag-date
+# actions:
+#   - type: auto-tag-date
+#     tag: CreationDate
+#     format: "%d-%m-%Y"

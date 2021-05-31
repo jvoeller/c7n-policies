@@ -1,0 +1,14 @@
+policies:
+  - name: aws-iam-mfa
+    description: |
+      Check for users not using MFA. Revoke their access keys and console access if they don't use MFA.
+    resource: iam-user
+    filters:
+      - type: credential
+        key: mfa_active
+        value: false
+    actions:
+      - type: delete
+        options:
+          - access-keys
+          - console-access

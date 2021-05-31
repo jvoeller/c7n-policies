@@ -1,0 +1,27 @@
+policies:
+  - name: aws-vm-region
+    description: |
+      Detect and terminate EC2 instances that are launched outside of specified regions.
+    resource: aws.ec2
+    mode:
+      type: cloudtrail
+      role: CloudCustodian-Role
+      events:
+        - source: ec2.amazonaws.com
+          event: RunInstances
+          ids: responseElements.instancesSet.items[].instanceId
+    filters:
+      - type: event
+        key: "region"
+        op: not-in
+        value:
+          - eu-central-1  #Frankfurt
+          - eu-west-1     #Ireland
+          - eu-west-2     #London
+          - eu-west-3     #Paris
+          - eu-south-1    #Milan
+          - eu-north-1    #Stockholm
+    actions:
+      - terminate
+
+
