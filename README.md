@@ -1,1 +1,2 @@
-This repo contains all cloud custodian policies for a comparison between Azure and AWS 
+Dieses Repository enthält alle Richtlinien, die im Rahmen der Thesis "Compliance Management Dienste für Cloud
+Computing Anwendungen im Finanzsektor" erstellt wurden.
